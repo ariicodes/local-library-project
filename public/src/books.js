@@ -14,11 +14,19 @@ const partitionBooksByBorrowedStatus = books => {
 		book.borrows[0].returned ? returned.push(book) : checkedOut.push(book)
 	})
 
-  return [checkedOut, returned]
+	return [checkedOut, returned]
 }
 
 const getBorrowersForBook = (book, accounts) => {
-  
+	const borrowers = []
+	const borrows = book.borrows
+
+	borrows.forEach(borrow => {
+		let foundAccount = accounts.find(account => borrow.id === account.id)
+		borrowers.push({ ...borrow, ...foundAccount })
+	})
+
+	return borrowers.length > 10 ? borrowers.slice(0, 10) : borrowers
 }
 
 module.exports = {
