@@ -11,11 +11,13 @@ const sortAccountsByLastName = accounts => {
 const getTotalNumberOfBorrows = (account, books) => {
 	let number = 0
 	const accId = account.id
+
 	books.forEach(book => {
 		book.borrows.forEach(borrow => {
 			if (borrow.id === accId) number += 1
 		})
 	})
+	
 	return number
 }
 

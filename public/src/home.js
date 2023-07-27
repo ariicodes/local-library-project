@@ -1,20 +1,31 @@
-function getTotalBooksCount(books) {}
+const getTotalBooksCount = books => books.length
 
-function getTotalAccountsCount(accounts) {}
+const getTotalAccountsCount = accounts => accounts.length
 
-function getBooksBorrowedCount(books) {}
+function getBooksBorrowedCount(books) {
+  let count = 0
 
-function getMostCommonGenres(books) {}
+  books.forEach(book => {
+		book.borrows.forEach(borrow => {
+			if (borrow.returned === false) count += 1
+		})
+	})
+
+  return count
+}
+
+function getMostCommonGenres(books) {
+}
 
 function getMostPopularBooks(books) {}
 
 function getMostPopularAuthors(books, authors) {}
 
 module.exports = {
-  getTotalBooksCount,
-  getTotalAccountsCount,
-  getBooksBorrowedCount,
-  getMostCommonGenres,
-  getMostPopularBooks,
-  getMostPopularAuthors,
-};
+	getTotalBooksCount,
+	getTotalAccountsCount,
+	getBooksBorrowedCount,
+	getMostCommonGenres,
+	getMostPopularBooks,
+	getMostPopularAuthors,
+}
