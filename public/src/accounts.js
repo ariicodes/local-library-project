@@ -25,7 +25,7 @@ function getBooksPossessedByAccount(account, books, authors) {
 	const accId = account.id
 	const booksPossessed = []
 
-	books.forEach(book => {
+	books.map(book => {
 		const authId = book.authorId
 		const borrows = book.borrows
     
