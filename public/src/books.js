@@ -18,12 +18,9 @@ const partitionBooksByBorrowedStatus = books => {
 }
 
 const getBorrowersForBook = (book, accounts) => {
-	const borrowers = []
-	const borrows = book.borrows
-
-	borrows.forEach(borrow => {
-		let foundAccount = accounts.find(account => borrow.id === account.id)
-		borrowers.push({ ...borrow, ...foundAccount })
+	const borrowers = book.borrows.map(borrow => {
+		const foundAccount = accounts.find(account => borrow.id === account.id)
+		return { ...borrow, ...foundAccount }
 	})
 
 	return borrowers.length > 10 ? borrowers.slice(0, 10) : borrowers
