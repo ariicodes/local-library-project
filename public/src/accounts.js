@@ -17,29 +17,25 @@ const getTotalNumberOfBorrows = (account, books) => {
 			if (borrow.id === accId) number += 1
 		})
 	})
-	
+
 	return number
 }
 
 function getBooksPossessedByAccount(account, books, authors) {
 	const accId = account.id
-	const booksPossessed = []
 
-	books.map(book => {
-		const authId = book.authorId
-		const borrows = book.borrows
-    
-		borrows.forEach(borrow => {
-			if (borrow.id === accId && borrow.returned === false) {
-				const author = authors.find(author => author.id === authId)
-				booksPossessed.push({
-					...book,
-					author,
-					borrows,
-				})
-			}
-		})
-	})
+	const booksPossessed = books
+		.filter(book =>
+			book.borrows.some(borrow => borrow.id === accId && !borrow.returned)
+		)
+		.map(book => ({
+			...book,
+			author: authors.find(author => author.id === book.authorId),
+			borrows: book.borrows.filter(
+				borrow => borrow.id === accId && !borrow.returned
+			),
+		}))
+
 	return booksPossessed
 }
 
